@@ -36,6 +36,11 @@ class DistrictRepository
 
   ### find a better enum.
   def find_by_name(location)
+    ### why doesn't this work here but it does in pry?
+    # place = districts.find do |district|
+    #   district.name == location
+    # end
+    # place.name
     answer = nil
     districts.each do |district|
       if district.name == location

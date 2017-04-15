@@ -6,9 +6,9 @@ class Enrollment
 
   def initialize(school_info)
     @name = school_info[:name].upcase
-    @timeframe = school_info[:school_participation][:timeframe].to_i
+    @data = school_info[:kindergarten_participation][:timeframe].to_i
     # @dataformat = school_info[:school_participation][:dataformat]
-    @data = school_info[:school_participation][:data]
+    # @data = school_info[:kindergarten_participation][:data]
     # @parent = parent
     @school_info = school_info
   end
@@ -19,7 +19,12 @@ class Enrollment
   end
 
   def kindergarten_participation_in_year(year)
-    @school_info[@school_info.keys[1]][year]
+    value = @school_info[@school_info.keys[1]][year]
+    return_year = truncate_percentages(value)
+  end
+
+  def truncate_percentages(value)
+    value.round(3)
   end
 end
 # ---------------------------------------------------------------------------
