@@ -2,6 +2,7 @@ require 'pry'
 require 'csv'
 require_relative 'loader_module'
 require_relative 'enrollment'
+require_relative 'district_repository'
 
 class EnrollmentRepository
   include LoaderModule
@@ -12,13 +13,13 @@ class EnrollmentRepository
     @enrollments = []
   end
 
-  def load_data(path)
+  def load_data(path, dr = nil)
     csv_loader(path)
-    make_enrollments
+    make_enrollments(dr)
     # binding.pry
   end
 
-  def make_enrollments
+  def make_enrollments(dr)
     data.each do |row|
       if find_by_name(row[:location].upcase)
         find_by_name(row[:location].upcase).school_info[:kindergarten_participation][row[:timeframe]] = row[:data]
@@ -28,6 +29,7 @@ class EnrollmentRepository
       end
       # binding.pry
     end
+    dr.make_districts
   end
 
     ### find a better enum.

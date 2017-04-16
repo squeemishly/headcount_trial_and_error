@@ -16,23 +16,28 @@ class DistrictRepository
 
   def load_data(path)
     csv_loader(path)
-    fill_list
-    build_districts
-    enrollment_repository.load_data(path)
+    enrollment_repository.load_data(path, self)
   end
 
-  def build_districts
-    districts.map! do |district|
-      district = District.new({:name => district})
+  def make_districts
+    enrollment_repository.enrollments.each do |enrollment|
+      districts << District.new({:name => enrollment.name})
     end
+    binding.pry
   end
 
-  def fill_list
-    data.each do |row|
-      districts << row[:location]
-    end
-    districts.uniq!
-  end
+  # def build_districts
+  #   districts.map! do |district|
+  #     district = District.new({:name => district})
+  #   end
+  # end
+  #
+  # def fill_list
+  #   data.each do |row|
+  #     districts << row[:location]
+  #   end
+  #   districts.uniq!
+  # end
 
   def find_by_name(location)
     districts.find do |district|
