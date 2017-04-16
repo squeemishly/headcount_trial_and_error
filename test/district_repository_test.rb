@@ -2,12 +2,15 @@ require_relative 'test_helper'
 require './lib/district_repository'
 
 class DistrictRepositoryTest < Minitest::Test
+  attr_reader :dr
+
   def setup
     @dr = DistrictRepository.new
+    @dr.load_data({:enrollment => {:kindergarten => "./data/Kindergartners in full-day program.csv"}})
   end
 
   def test_it_exists
-    assert_instance_of DistrictRepository, @dr
+    assert_instance_of DistrictRepository, dr
   end
 
   # def test_it_has_access_to_our_file
@@ -21,25 +24,23 @@ class DistrictRepositoryTest < Minitest::Test
   # end
 
   def test_it_can_find_a_particular_district
-    @dr.load_data({:enrollment => {:kindergarten => "./data/Kindergartners in full-day program.csv"}})
-    assert_equal "ACADEMY 20", @dr.find_by_name("ACADEMY 20")
-    refute @dr.find_by_name("squee")
+    assert_instance_of District, dr.find_by_name("ACADEMY 20")
+    refute dr.find_by_name("squee")
   end
 
   def test_it_can_find_a_district_from_a_name_fragment
-    @dr.load_data({:enrollment => {:kindergarten => "./data/Kindergartners in full-day program.csv"}})
-    assert_equal ["ASPEN 1"], @dr.find_all_matching("aspen")
-    assert_equal [], @dr.find_all_matching("squee")
+    assert_equal 1, dr.find_all_matching("aspen").count
+    assert_equal 2, dr.find_all_matching("adams").count
+    assert_equal [], dr.find_all_matching("squee")
   end
 
   def test_it_can_access_the_enrollment_repository
-    @dr.load_data({:enrollment => {:kindergarten => "./data/Kindergartners in full-day program.csv"}})
-    assert_instance_of EnrollmentRepository, @dr.enrollment_repository
+    assert_instance_of EnrollmentRepository, dr.enrollment_repository
   end
 
   def test_it_can_automatically_access_enrollment_data
-    @dr.load_data({:enrollment => {:kindergarten => "./data/Kindergartners in full-day program.csv"}})
-    district = @dr.find_by_name("ACADEMY 20")
+    skip
+    district = dr.find_by_name("ACADEMY 20")
     assert_equal 0.436, district.enrollment.kindergarten_participation_in_year(2010)
   end
 end

@@ -14,21 +14,19 @@ class EnrollmentRepository
 
   def load_data(path)
     csv_loader(path)
-    fill_list(enrollments)
     make_enrollments
-    binding.pry
+    # binding.pry
   end
 
   def make_enrollments
-    enrollments.map! do |row|
-      row = Enrollment.new({:name => row[:location],
-        :kindergarten_participation => { row[:timeframe] => row[:data]}})
-    end
-  end
-
-  def fill_list(list_name)
     data.each do |row|
-      list_name << row
+      if find_by_name(row[:location].upcase)
+        find_by_name(row[:location].upcase).school_info[:kindergarten_participation][row[:timeframe]] = row[:data]
+      else
+        enrollments << Enrollment.new({:name => row[:location],
+         :kindergarten_participation => { row[:timeframe] => row[:data]}})
+      end
+      # binding.pry
     end
   end
 

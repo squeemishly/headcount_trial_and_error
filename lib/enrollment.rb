@@ -15,11 +15,11 @@ class Enrollment
 
 #### need to truncate to the 3rd digit... do this. or die###
   def kindergarten_participation_by_year
-    @school_info[@school_info.keys[1]]
+    @school_info[:kindergarten_participation]
   end
 
   def kindergarten_participation_in_year(year)
-    value = @school_info[@school_info.keys[1]][year]
+    value = @school_info[:kindergarten_participation][year]
     return_year = truncate_percentages(value)
   end
 

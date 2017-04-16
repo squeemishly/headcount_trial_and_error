@@ -34,32 +34,18 @@ class DistrictRepository
     districts.uniq!
   end
 
-  ### find a better enum.
   def find_by_name(location)
-    ### why doesn't this work here but it does in pry?
-    # place = districts.find do |district|
-    #   district.name == location
-    # end
-    # place.name
-    answer = nil
-    districts.each do |district|
-      if district.name == location
-        answer = district.name
-      end
+    districts.find do |district|
+      district.name == location
     end
-    answer
   end
 
-  ### find a better enum. (maybe make a method that gives an array of just district names?)
   def find_all_matching(fragment)
-    locations = []
-    districts.each do |district|
-      if district.name.include? fragment.upcase
-        locations << district.name
-      end
+    districts.find_all do |district|
+      district.name.include? fragment.upcase
     end
-    locations
   end
+
 end
 
 # ----------------------------------------------------------------------
