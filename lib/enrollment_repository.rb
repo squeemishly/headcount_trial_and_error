@@ -14,17 +14,18 @@ class EnrollmentRepository
   end
 
   def load_data(path, dr = nil)
-    csv_loader(path)
-    make_enrollments
-    dr.make_districts if dr != nil
+    enrollment_loader(path, dr)
+    # make_enrollments
+    # dr.make_districts if dr != nil
   end
 
-  def make_enrollments
+  def make_enrollments(key)
     data.each do |row|
       if find_by_name(row[:location].upcase)
-        find_by_name(row[:location].upcase).school_info[:kindergarten_participation][row[:timeframe]] = row[:data]
+        find_by_name(row[:location].upcase).school_info[
+          :kindergarten_participation][row[:timeframe]] = row[:data]
       else
-        enrollments << Enrollment.new({:name => row[:location],
+        enrollments << Enrollment.new({:name => row[:location], :type => key,
          :kindergarten_participation => { row[:timeframe] => row[:data]}})
       end
     end

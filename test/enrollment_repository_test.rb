@@ -6,7 +6,12 @@ class EnrollmentRepositoryTest < Minitest::Test
 
   def setup
     @er = EnrollmentRepository.new
-    @er.load_data({:enrollment => {:kindergarten => "./test/fixtures/Kindergartners_in_a_full_day_program.csv"}})
+    @er.load_data({
+      :enrollment => {
+        :kindergarten => "./test/fixtures/Kindergartners in full-day program.csv",
+        :high_school_graduation => "./test/fixtures/High school graduation rates.csv"
+      }
+    })
   end
 
   def test_it_exists
