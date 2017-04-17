@@ -6,7 +6,8 @@ class Enrollment
 
   def initialize(school_info)
     @name = school_info[:name].upcase
-    @data = school_info[:kindergarten_participation][:timeframe].to_i
+    @kindergarten_participation = school_info[:kindergarten_participation]
+    # @data = school_info[:kindergarten_participation]
     # @dataformat = school_info[:school_participation][:dataformat]
     # @data = school_info[:kindergarten_participation][:data]
     # @parent = parent
@@ -15,17 +16,22 @@ class Enrollment
 
 #### need to truncate to the 3rd digit... do this. or die###
   def kindergarten_participation_by_year
-    @school_info[:kindergarten_participation]
+    numberize_values
   end
 
   def kindergarten_participation_in_year(year)
-    value = @school_info[:kindergarten_participation][year]
-    return_year = truncate_percentages(value)
+    numberize_values[year].round(3)
   end
 
-  def truncate_percentages(value)
-    value.round(3)
+  def numberize_values
+    numberized = Hash[@kindergarten_participation.keys.map(&:to_i)
+      .zip(@kindergarten_participation.values.map(&:to_f))]
   end
+
+
+  # def truncate_percentages(value)
+  #   value.round(3)
+  # end
 end
 # ---------------------------------------------------------------------------
 # require 'pry'

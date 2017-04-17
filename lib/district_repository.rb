@@ -6,38 +6,28 @@ require_relative 'enrollment_repository'
 
 class DistrictRepository
   include LoaderModule
-  attr_reader :enrollment_repository, :districts, :data
+  attr_reader :enrollment_repo, :districts, :data
 
   def initialize
     @data = nil
     @districts = []
-    @enrollment_repository = EnrollmentRepository.new
+    @enrollment_repo = nil
   end
 
   def load_data(path)
     csv_loader(path)
-    enrollment_repository.load_data(path, self)
+    @enrollment_repo = EnrollmentRepository.new if enrollment_repo.nil?
+    enrollment_repo.load_data(path, self)
   end
 
   def make_districts
-    enrollment_repository.enrollments.each do |enrollment|
-      districts << District.new({:name => enrollment.name})
+    enrollment_repo.enrollments.each do |enrollment|
+      districts << District.new({:name => enrollment.name}, self)
     end
-    binding.pry
+    # binding.pry
   end
 
-  # def build_districts
-  #   districts.map! do |district|
-  #     district = District.new({:name => district})
-  #   end
-  # end
-  #
-  # def fill_list
-  #   data.each do |row|
-  #     districts << row[:location]
-  #   end
-  #   districts.uniq!
-  # end
+
 
   def find_by_name(location)
     districts.find do |district|
@@ -53,10 +43,23 @@ class DistrictRepository
 
 end
 
+# def build_districts
+#   districts.map! do |district|
+#     district = District.new({:name => district})
+#   end
+# end
+#
+# def fill_list
+#   data.each do |row|
+#     districts << row[:location]
+#   end
+#   districts.uniq!
+# end
+
 # ----------------------------------------------------------------------
 # require 'pry'
 # require 'csv'
-# require_relative 'enrollment_repository'
+# require_relative 'enrollment_repo'
 # require_relative 'enrollment'
 #
 # class DistrictRepository

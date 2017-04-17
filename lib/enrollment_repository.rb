@@ -15,11 +15,11 @@ class EnrollmentRepository
 
   def load_data(path, dr = nil)
     csv_loader(path)
-    make_enrollments(dr)
-    # binding.pry
+    make_enrollments
+    dr.make_districts if dr != nil
   end
 
-  def make_enrollments(dr)
+  def make_enrollments
     data.each do |row|
       if find_by_name(row[:location].upcase)
         find_by_name(row[:location].upcase).school_info[:kindergarten_participation][row[:timeframe]] = row[:data]
@@ -27,17 +27,15 @@ class EnrollmentRepository
         enrollments << Enrollment.new({:name => row[:location],
          :kindergarten_participation => { row[:timeframe] => row[:data]}})
       end
-      # binding.pry
     end
-    dr.make_districts
   end
 
-    ### find a better enum.
   def find_by_name(location)
     enrollments.find do |enrollment|
       enrollment.name == location
     end
   end
+
   #   enrollment = nil
   #   @data.each do |row|
   #     if row[:location].upcase == location.upcase
