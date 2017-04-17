@@ -18,12 +18,13 @@ class Enrollment
   end
 
   def kindergarten_participation_in_year(year)
-    numberize_values[year].round(3)
+    numberized = numberize_values[year].round(3)
   end
 
   def numberize_values
     numberized = Hash[@kindergarten_participation.keys.map(&:to_i)
       .zip(@kindergarten_participation.values.map(&:to_f))]
+    numberized
   end
 
 
