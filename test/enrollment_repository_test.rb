@@ -13,8 +13,14 @@ class EnrollmentRepositoryTest < Minitest::Test
     assert_instance_of EnrollmentRepository, er
   end
 
+  def test_it_has_access_to_the_csv
+    assert_instance_of CSV, er.data
+  end
+
   def test_it_creates_instances_of_enrollment_when_it_loads_the_data
     assert_instance_of Enrollment, er.enrollments[0]
+    assert_instance_of Enrollment, er.enrollments[1]
+    assert_instance_of Enrollment, er.enrollments[2]
   end
 
   def test_it_can_find_a_particular_district

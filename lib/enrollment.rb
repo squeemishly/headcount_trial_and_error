@@ -1,5 +1,3 @@
-require 'pry'
-
 class Enrollment
   attr_reader :school_info,
               :name
@@ -7,11 +5,11 @@ class Enrollment
   def initialize(school_info)
     @name = school_info[:name].upcase
     @kindergarten_participation = school_info[:kindergarten_participation]
+    @school_info = school_info
     # @data = school_info[:kindergarten_participation]
     # @dataformat = school_info[:school_participation][:dataformat]
     # @data = school_info[:kindergarten_participation][:data]
     # @parent = parent
-    @school_info = school_info
   end
 
 #### need to truncate to the 3rd digit... do this. or die###

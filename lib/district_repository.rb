@@ -15,8 +15,7 @@ class DistrictRepository
   end
 
   def load_data(path)
-    csv_loader(path)
-    @enrollment_repo = EnrollmentRepository.new if enrollment_repo.nil?
+    @enrollment_repo = EnrollmentRepository.new #if enrollment_repo.nil?
     enrollment_repo.load_data(path, self)
   end
 
@@ -24,10 +23,7 @@ class DistrictRepository
     enrollment_repo.enrollments.each do |enrollment|
       districts << District.new({:name => enrollment.name}, self)
     end
-    # binding.pry
   end
-
-
 
   def find_by_name(location)
     districts.find do |district|

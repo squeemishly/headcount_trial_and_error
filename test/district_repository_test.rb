@@ -16,6 +16,12 @@ class DistrictRepositoryTest < Minitest::Test
     assert_instance_of DistrictRepository, dr
   end
 
+  def test_it_makes_districts
+    assert_instance_of District, dr.districts[0]
+    assert_instance_of District, dr.districts[1]
+    assert_instance_of District, dr.districts[2]
+  end
+
   def test_it_can_find_a_particular_district
     assert_instance_of District, dr.find_by_name("ACADEMY 20")
     refute dr.find_by_name("squee")
@@ -27,13 +33,14 @@ class DistrictRepositoryTest < Minitest::Test
     assert_equal [], dr.find_all_matching("squee")
   end
 
-  def test_it_can_access_the_enrollment_repository
+  def test_it_can_starts_with_an_enrollment_repo
     assert_instance_of EnrollmentRepository, dr.enrollment_repo
   end
 
   def test_it_can_automatically_access_enrollment_data
     district = dr.find_by_name("ACADEMY 20")
     assert_equal 0.436, district.enrollment.kindergarten_participation_in_year(2010)
+    assert_equal 11, district.enrollment.kindergarten_participation_by_year.length
   end
 end
 # --------------------------------------------------------------------------------------
