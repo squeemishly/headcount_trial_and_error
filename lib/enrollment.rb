@@ -20,11 +20,7 @@ class Enrollment
   end
 
   def kindergarten_participation_in_year(year)
-    numberize_values(@kindergarten_participation)[year].round(3)
-  end
-
-  def numberize_values(data)
-    Hash[data.keys.map(&:to_i).zip(data.values.map(&:to_f))]
+    numberize_values(@kindergarten_participation)[year]
   end
 
   def graduation_rate_by_year
@@ -32,13 +28,13 @@ class Enrollment
   end
 
   def graduation_rate_in_year(year)
-    numberize_values(@high_school_graduation)[year].round(3)
+    numberize_values(@high_school_graduation)[year]
   end
 
+  def numberize_values(data)
+    Hash[data.keys.map(&:to_i).zip(data.values.map {|x| x.to_f.round(3)})]
+  end
 
-  # def truncate_percentages(value)
-  #   value.round(3)
-  # end
 end
 # ---------------------------------------------------------------------------
 # require 'pry'

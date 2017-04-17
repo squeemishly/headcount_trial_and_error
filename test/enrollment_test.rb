@@ -15,7 +15,7 @@ class EnrollmentTest < Minitest::Test
 
   def test_it_parses_the_data_into_a_hash
     assert_equal [2010, 2011, 2012], e.kindergarten_participation_by_year.keys
-    assert_equal [0.3915, 0.35356, 0.2677], e.kindergarten_participation_by_year.values
+    assert_equal [0.392, 0.354, 0.268], e.kindergarten_participation_by_year.values
   end
 
   def test_it_can_find_a_particular_years_results
@@ -24,7 +24,7 @@ class EnrollmentTest < Minitest::Test
 
   def test_it_can_access_graduation_rate_by_year
     assert_equal [2010, 2011, 2012], enrollment.graduation_rate_by_year.keys
-    assert_equal [0.3915, 0.35356, 0.2677], enrollment.graduation_rate_by_year.values
+    assert_equal [0.392, 0.354, 0.268], enrollment.graduation_rate_by_year.values
   end
 
   def test_it_can_determine_the_graduation_rate_for_a_single_year
