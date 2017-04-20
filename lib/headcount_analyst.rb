@@ -30,14 +30,13 @@ class HeadcountAnalyst
     if dist.keys == [:for]
       dist = dist[:for]
       if dist == 'STATEWIDE'
-          num = statewide
+          statewide
       else
         num = kindergarten_participation_against_high_school_graduation(dist)
         num > 0.6 && num < 1.5
       end
     elsif dist.keys == [:across]
-      num = across_districts(dist)
-      num > 0.6 && num < 1.5
+      across_districts(dist) > 0.6 && across_districts(dist) < 1.5
     end
   end
 
@@ -54,15 +53,19 @@ class HeadcountAnalyst
   end
 
   def statewide
-    correlation = []
-    no_correlation = []
-    dr.enrollment_repo.enrollments.each do |enrollment|
-      num = kindergarten_participation_against_high_school_graduation(enrollment.name)
-      correlation << num if num > 0.6 && num < 1.5
+    # correlation = []
+    correlation = dr.enrollment_repo.enrollments.count do |enrollment|
+      kindergarten_participation_correlates_with_high_school_graduation({for: enrollment.name})
     end
     # binding.pry
-    percent = correlation.count/dr.enrollment_repo.enrollments.count
-    if percent >= 0.70 ? True : False
+    # dr.enrollment_repo.enrollments.each do |enrollment|
+    #   if kindergarten_participation_against_high_school_graduation(enrollment.name)
+    #     correlation << enrollment
+    #   end
+    # end
+    # binding.pry
+    percent = correlation/dr.enrollment_repo.enrollments.count
+    percent >= 0.70
   end
 
   def across_districts(dist)
@@ -75,7 +78,7 @@ class HeadcountAnalyst
     end
     total/count
     # why isn't this working?
-    # num = dists.reduce(0) do |total, dist|
+    # dists.reduce(0) do |total, dist|
     #   total += kindergarten_participation_against_high_school_graduation(dist)
     #   binding.pry
     # end
@@ -110,7 +113,6 @@ class HeadcountAnalyst
     find_district(district).reduce(0) do |total, (key, value)|
       count += 1
       total += value
-      # total
     end/count
   end
 

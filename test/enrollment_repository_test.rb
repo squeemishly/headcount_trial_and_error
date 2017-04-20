@@ -32,7 +32,7 @@ class EnrollmentRepositoryTest < Minitest::Test
   def test_it_can_access_graduation_rate_by_year
     skip
     assert_equal ({ 2010 => 0.895, 2011 => 0.895, 2012 => 0.889,
-     2013 => 0.913, 2014 => 0.898,}), enrollment.graduation_rate_by_year
+     2013 => 0.913, 2014 => 0.898,}), er.graduation_rate_by_year
   end
 
 

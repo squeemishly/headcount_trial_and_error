@@ -55,7 +55,7 @@ class HeadcountAnalystTest < Minitest::Test
 
   def test_it_can_correlate_the_data
     assert ha.kindergarten_participation_correlates_with_high_school_graduation(for: 'ACADEMY 20')
-    assert ha.kindergarten_participation_correlates_with_high_school_graduation(:for => 'STATEWIDE')
+    refute ha.kindergarten_participation_correlates_with_high_school_graduation(:for => 'STATEWIDE')
     assert ha.kindergarten_participation_correlates_with_high_school_graduation(
     :across => ["ACADEMY 20", 'PARK (ESTES PARK) R-3', 'YUMA SCHOOL DISTRICT 1'])
   end
