@@ -27,16 +27,9 @@ class EnrollmentRepository
   def make_enrollments(key, data)
     data.each do |row|
       if find_by_name(row[:location].upcase)
-        if find_by_name(row[:location].upcase).school_info[key] == nil
-          find_by_name(row[:location].upcase).school_info[
-            key] = {row[:timeframe].to_i => row[:data]}
-        else
-          find_by_name(row[:location].upcase).school_info[
-            key][row[:timeframe].to_i] = row[:data]
-        end
+        add_to_district(row, key)
       else
-        enrollments << Enrollment.new({:name => row[:location],
-         key => { row[:timeframe].to_i => row[:data] }})
+        create_enrollment(row, key)
       end
     end
   end
@@ -44,6 +37,19 @@ class EnrollmentRepository
   def find_by_name(location)
     enrollments.find do |enrollment|
       enrollment.name == location
+    end
+  end
+
+  def create_enrollment(row, key)
+    enrollments << Enrollment.new({:name => row[:location],
+      key => { row[:timeframe].to_i => row[:data].to_f }})
+  end
+
+  def add_to_district(row, key)
+    if find_by_name(row[:location].upcase).school_info[key] == nil
+      find_by_name(row[:location].upcase).school_info[key] = {row[:timeframe].to_i => row[:data].to_f}
+    else
+      find_by_name(row[:location].upcase).school_info[key][row[:timeframe].to_i] = row[:data].to_f
     end
   end
 

@@ -42,9 +42,19 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_it_can_find_the_graduation_variation
+    assert_equal 1.195, ha.graduation_variation('ACADEMY 20', 'COLORADO')
+  end
+
+  def test_it_can_find_the_kindergarten_variation
+    assert_equal 0.766, ha.kindergarten_variation('ACADEMY 20', 'COLORADO')
   end
 
   def test_it_can_find_the_k_part_versus_graduation
-
+    assert_equal 0.641, ha.kindergarten_participation_against_high_school_graduation('ACADEMY 20')
   end
+
+  def test_it_can_correlate_the_data
+    assert ha.kindergarten_participation_correlates_with_high_school_graduation(for: 'ACADEMY 20')
+  end
+
 end
