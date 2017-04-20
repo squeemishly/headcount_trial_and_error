@@ -5,8 +5,10 @@ class EnrollmentTest < Minitest::Test
   attr_reader :e, :enrollment
 
   def setup
-    @e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677}})
-    @enrollment = Enrollment.new({:name => "ACADEMY 20", :high_school_graduation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677}})
+    @e = Enrollment.new({:name => "ACADEMY 20",
+        :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677}})
+    @enrollment = Enrollment.new({:name => "ACADEMY 20",
+        :high_school_graduation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677}})
   end
 
   def test_it_exists

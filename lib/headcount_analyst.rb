@@ -53,35 +53,18 @@ class HeadcountAnalyst
   end
 
   def statewide
-    # correlation = []
     correlation = dr.enrollment_repo.enrollments.count do |enrollment|
       kindergarten_participation_correlates_with_high_school_graduation({for: enrollment.name})
     end
-    # binding.pry
-    # dr.enrollment_repo.enrollments.each do |enrollment|
-    #   if kindergarten_participation_against_high_school_graduation(enrollment.name)
-    #     correlation << enrollment
-    #   end
-    # end
-    # binding.pry
     percent = correlation/dr.enrollment_repo.enrollments.count
     percent >= 0.70
   end
 
   def across_districts(dist)
     dists = dist[:across]
-    total = 0
-    count = 0
-    dists.each do |dist|
-      count += 1
-      total += kindergarten_participation_against_high_school_graduation(dist)
-    end
-    total/count
-    # why isn't this working?
-    # dists.reduce(0) do |total, dist|
-    #   total += kindergarten_participation_against_high_school_graduation(dist)
-    #   binding.pry
-    # end
+    dists.reduce(0) do |total, dist|
+      total + kindergarten_participation_against_high_school_graduation(dist)
+    end/(dists.count)
   end
 
   def determine_variation(first, second)
