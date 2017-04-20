@@ -10,11 +10,6 @@ class HeadcountAnalystTest < Minitest::Test
     @dr.load_data({:enrollment =>
       {:kindergarten => "./data/Kindergartners in full-day program.csv",
         :high_school_graduation => "./data/High school graduation rates.csv"}})
-    # @dr.load_data({
-    #   :enrollment => {
-    #     :kindergarten => "./test/fixtures/Kindergartners_in_a_full_day_program.csv"
-    #   }
-    # })
     @ha = HeadcountAnalyst.new(dr)
   end
 

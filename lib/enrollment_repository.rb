@@ -43,44 +43,4 @@ class EnrollmentRepository
     end
   end
 
-  #   enrollment = nil
-  #   @data.each do |row|
-  #     if row[:location].upcase == location.upcase
-  #       enrollment = Enrollment.new({:name => location.upcase})
-  #     end
-  #   end
-  #   enrollment
-  # end
 end
-
-# ---------------------------------------------------------------------------
-# require 'pry'
-#
-# class EnrollmentRepository
-#   attr_reader :path
-#               :repo
-#
-#   def initialize(path, repo)
-#     @path = path
-#     @repo = repo
-#   end
-#
-#   def csv
-#     @csv ||= CSV.open(path[:kindergarten], headers:true, header_converters: :symbol)
-#   end
-#
-#   def all
-#     @all ||= csv.map do |row|
-#       Enrollment.new(row, self)
-#       # binding.pry
-#     end
-#   end
-#   enrollment_names = {}
-#   @all.each do |enrollment|
-#     enrollment_names[enrollment.name] = Hash.new
-#   end
-#
-#   @all.each do |enrollment|
-#     enrollment_names[enrollment.name][enrollment.timeframe] = enrollment.data
-#   end
-# end

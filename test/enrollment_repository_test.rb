@@ -35,35 +35,3 @@ class EnrollmentRepositoryTest < Minitest::Test
 
 
 end
-# --------------------------------------------------------------------------------------
-# require 'minitest/autorun'
-# require 'minitest/pride'
-# require './lib/enrollment_repository'
-# require './lib/enrollment'
-# require './lib/district_repository'
-# require 'pry'
-#
-# class EnrollmentRepositoryTest < Minitest::Test
-#
-#   def setup
-#     @dr = DistrictRepository.from_csv({
-#     :enrollment => {
-#       :kindergarten => "./data/Kindergartners in full-day program.csv"
-#       }
-#     })
-#
-#     @er = @dr.enrollment
-#   end
-#
-#   def test_it_can_load_csv
-#     assert_instance_of CSV, @er.csv
-#   end
-#
-#   def test_it_can_create_instance_of_transaction
-#     assert_instance_of Enrollment, @er.all.first
-#   end
-#
-#   def test_all_returns_an_array
-#     assert_instance_of Array, @er.all
-#   end
-# end

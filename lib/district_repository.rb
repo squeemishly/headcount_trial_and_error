@@ -38,35 +38,3 @@ class DistrictRepository
   end
 
 end
-
-# def build_districts
-#   districts.map! do |district|
-#     district = District.new({:name => district})
-#   end
-# end
-#
-# def fill_list
-#   data.each do |row|
-#     districts << row[:location]
-#   end
-#   districts.uniq!
-# end
-
-# ----------------------------------------------------------------------
-# require 'pry'
-# require 'csv'
-# require_relative 'enrollment_repo'
-# require_relative 'enrollment'
-#
-# class DistrictRepository
-#   attr_reader :enrollment
-#
-#   def initialize(data)
-#     @enrollment ||= EnrollmentRepository.new(data[:enrollment], self)
-#       binding.pry
-#   end
-#
-#   def self.from_csv(data)
-#     DistrictRepository.new(data)
-#   end
-# end

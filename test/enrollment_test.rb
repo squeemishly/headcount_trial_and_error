@@ -31,32 +31,3 @@ class EnrollmentTest < Minitest::Test
     assert_equal 0.392, enrollment.graduation_rate_in_year(2010)
   end
 end
-# ------------------------------------------------------------------------
-# require 'minitest/autorun'
-# require 'minitest/pride'
-# require './lib/enrollment'
-# require './lib/district_repository'
-# require './lib/enrollment_repository'
-# require 'pry'
-#
-# class EnrollmentTest < Minitest::Test
-#
-#   def setup
-#     @dr = DistrictRepository.from_csv({
-#     :enrollment => {
-#       :kindergarten => "./data/Kindergartners in full-day program.csv"
-#       }
-#     })
-#
-#     @e = Enrollment.new({
-#       :location => "ACADEMY 20",
-#       :timeframe => 2004,
-#       :dataformat => "Percent",
-#       :data => 0.30201
-#       }, @dr.enrollment)
-#   end
-#
-#   def test_it_exists
-#     assert_instance_of Enrollment, @e
-#   end
-# end

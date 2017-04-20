@@ -42,31 +42,3 @@ class DistrictRepositoryTest < Minitest::Test
     assert_equal 11, district.enrollment.kindergarten_participation_by_year.length
   end
 end
-# --------------------------------------------------------------------------------------
-# require 'minitest/autorun'
-# require 'minitest/pride'
-# require './lib/district_repository'
-# require 'pry'
-#
-# class DistrictRepositoryTest < Minitest::Test
-#
-#   def setup
-#     @dr = DistrictRepository.from_csv({
-#     :enrollment => {
-#       :kindergarten => "./data/Kindergartners in full-day program.csv"
-#       }
-#     })
-#   end
-#
-#   def test_it_exists
-#     assert_instance_of DistrictRepository, @dr
-#   end
-#
-#   def test_has_method_that_takes_hash_of_things_and_returns_a_district_repo
-#     assert_instance_of DistrictRepository, @dr
-#   end
-#
-#   def test_data_files_return_instance_of_corresponding_repositories
-#     assert_instance_of EnrollmentRepository, @dr.enrollment
-#   end
-# end
