@@ -1,22 +1,18 @@
-require 'csv'
 require 'pry'
 require_relative 'district'
-require_relative 'loader_module'
 require_relative 'enrollment_repository'
 
 class DistrictRepository
-  include LoaderModule
-  attr_reader :enrollment_repo, :districts, :data
+  attr_reader :enrollment_repo,
+              :districts,
+              :data
 
   def initialize
-    # @data = nil
     @districts = []
-    @enrollment_repo = nil
+    @enrollment_repo = EnrollmentRepository.new
   end
 
   def load_data(path)
-    #could this be combined to EnrollmentRepo.new.load_data(path,self)?
-    @enrollment_repo = EnrollmentRepository.new #if enrollment_repo.nil?
     enrollment_repo.load_data(path, self)
   end
 

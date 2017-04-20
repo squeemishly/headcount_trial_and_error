@@ -1,3 +1,5 @@
+require 'csv'
+
 module LoaderModule
 
   def read_file(file)

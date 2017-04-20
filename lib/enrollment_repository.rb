@@ -1,8 +1,6 @@
 require 'pry'
-require 'csv'
 require_relative 'loader_module'
 require_relative 'enrollment'
-require_relative 'district_repository'
 
 class EnrollmentRepository
   include LoaderModule
