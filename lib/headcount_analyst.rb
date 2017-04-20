@@ -27,11 +27,15 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_correlates_with_high_school_graduation(dist)
-    dist = dist[:for]
-    if dist == 'STATEWIDE'
-      num = statewide
-    else
-      num = kindergarten_participation_against_high_school_graduation(dist)
+    if dist.keys == [:for]
+      dist = dist[:for]
+      if dist == 'STATEWIDE'
+          num = statewide
+      else
+        num = kindergarten_participation_against_high_school_graduation(dist)
+      end
+    elsif dist.keys == [:across]
+      num = across_districts(dist)
     end
     num > 0.6 && num < 1.5
   end
@@ -53,10 +57,27 @@ class HeadcountAnalyst
     k_total = 0
     hs_total = 0
     dr.enrollment_repo.enrollments.each do |enrollment|
-      k_total += find_the_ave(find_district(enrollment.name))
-      hs_total = find_the_ave(find_district_graduation(enrollment.name))
+      next if enrollment.name == "COLORADO"
+      k_total += total_dist_attendance(enrollment.name)
+      hs_total += find_the_ave(find_district_graduation(enrollment.name))
     end
     k_total/hs_total
+  end
+
+  def across_districts(dist)
+    dists = dist[:across]
+    total = 0
+    count = 0
+    dists.each do |dist|
+      count += 1
+      total += kindergarten_participation_against_high_school_graduation(dist)
+    end
+    total/count
+    # why isn't this working?
+    # num = dists.reduce(0) do |total, dist|
+    #   total += kindergarten_participation_against_high_school_graduation(dist)
+    #   binding.pry
+    # end
   end
 
   def determine_variation(first, second)
@@ -88,7 +109,7 @@ class HeadcountAnalyst
     find_district(district).reduce(0) do |total, (key, value)|
       count += 1
       total += value
-      total
+      # total
     end/count
   end
 
