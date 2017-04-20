@@ -29,22 +29,37 @@ class HeadcountAnalyst
   def kindergarten_participation_correlates_with_high_school_graduation(dist)
     dist = dist[:for]
     if dist == 'STATEWIDE'
-      binding.pry
+      num = statewide
     else
       num = kindergarten_participation_against_high_school_graduation(dist)
-      num > 0.6 || num < 1.5
     end
+    num > 0.6 && num < 1.5
   end
 
   def graduation_variation(district_1, district_2 = 'COLORADO')
     first = find_district_graduation(district_1)
     second = find_district_graduation(district_2)
-    (find_the_ave(first)/find_the_ave(second)).round(3)
+    determine_variation(first, second)
   end
 
   def kindergarten_variation(district_1, district_2 = 'COLORADO')
     first = find_district(district_1)
     second = find_district(district_2)
+    determine_variation(first, second)
+  end
+
+  def statewide
+    #everything about this is hideous. but it's almost midnight and I'm dying
+    k_total = 0
+    hs_total = 0
+    dr.enrollment_repo.enrollments.each do |enrollment|
+      k_total += find_the_ave(find_district(enrollment.name))
+      hs_total = find_the_ave(find_district_graduation(enrollment.name))
+    end
+    k_total/hs_total
+  end
+
+  def determine_variation(first, second)
     (find_the_ave(first)/find_the_ave(second)).round(3)
   end
 
