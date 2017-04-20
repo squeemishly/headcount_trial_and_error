@@ -33,11 +33,12 @@ class HeadcountAnalyst
           num = statewide
       else
         num = kindergarten_participation_against_high_school_graduation(dist)
+        num > 0.6 && num < 1.5
       end
     elsif dist.keys == [:across]
       num = across_districts(dist)
+      num > 0.6 && num < 1.5
     end
-    num > 0.6 && num < 1.5
   end
 
   def graduation_variation(district_1, district_2 = 'COLORADO')
@@ -53,15 +54,15 @@ class HeadcountAnalyst
   end
 
   def statewide
-    #everything about this is hideous. but it's almost midnight and I'm dying
-    k_total = 0
-    hs_total = 0
+    correlation = []
+    no_correlation = []
     dr.enrollment_repo.enrollments.each do |enrollment|
-      next if enrollment.name == "COLORADO"
-      k_total += total_dist_attendance(enrollment.name)
-      hs_total += find_the_ave(find_district_graduation(enrollment.name))
+      num = kindergarten_participation_against_high_school_graduation(enrollment.name)
+      correlation << num if num > 0.6 && num < 1.5
     end
-    k_total/hs_total
+    # binding.pry
+    percent = correlation.count/dr.enrollment_repo.enrollments.count
+    if percent >= 0.70 ? True : False
   end
 
   def across_districts(dist)
