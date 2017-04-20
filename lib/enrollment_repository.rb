@@ -18,21 +18,25 @@ class EnrollmentRepository
 
   def enrollment_loader(path, dr)
     path[:enrollment].each do |key, value|
-      data = read_file(value, path[:enrollment])
+      data = read_file(value)
       make_enrollments(key, data)
       dr.make_districts if dr != nil
     end
   end
 
   def make_enrollments(key, data)
-    # binding.pry
     data.each do |row|
       if find_by_name(row[:location].upcase)
-        find_by_name(row[:location].upcase).school_info[
-          key][row[:timeframe]] = row[:data]
+        if find_by_name(row[:location].upcase).school_info[key] == nil
+          find_by_name(row[:location].upcase).school_info[
+            key] = {row[:timeframe].to_i => row[:data]}
+        else
+          find_by_name(row[:location].upcase).school_info[
+            key][row[:timeframe].to_i] = row[:data]
+        end
       else
         enrollments << Enrollment.new({:name => row[:location],
-         key => { row[:timeframe] => row[:data]}})
+         key => { row[:timeframe].to_i => row[:data] }})
       end
     end
   end

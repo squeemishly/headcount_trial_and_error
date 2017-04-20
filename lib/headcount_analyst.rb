@@ -28,7 +28,7 @@ class HeadcountAnalyst
   def kindergarten_participation_rate_variation_trend(district_1, district_2)
     district_2 = district_2[:against]
     first = find_district(district_1)
-    second = find_district(district_2)
+    second = find_district(district_2) #get rid of the first line and use it here
     result = first.reduce({}) do |hash, (key, value)|
       hash[key] = (first[key]/second[key]).round(3)
       hash

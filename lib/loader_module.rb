@@ -1,6 +1,6 @@
 module LoaderModule
 
-  def read_file(file, new_key)
+  def read_file(file)
     CSV.open(file,headers: true, header_converters: :symbol)
   end
 

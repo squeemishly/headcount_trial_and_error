@@ -28,16 +28,16 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_it_can_find_a_districts_average_participation
-    assert_equal 0.598, ha.district_average("ACADEMY 20")
+    assert_equal 0.407, ha.district_average("ACADEMY 20")
   end
 
   def test_it_compares_a_districts_average_participation_against_another_district
-    assert_equal 1.072, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'COLORADO')
-    assert_equal 0.697, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'YUMA SCHOOL DISTRICT 1')
+    assert_equal 0.768, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'COLORADO')
+    assert_equal 0.448, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'YUMA SCHOOL DISTRICT 1')
   end
 
   def test_it_compares_a_districts_participation_rates_over_the_years
-    assert_equal ({2004=>1.258, 2005=>0.96, 2006=>1.05, 2007=>0.992, 2008=>0.718, 2009=>0.652, 2010=>1.236, 2011=>1.211, 2012=>1.18, 2013=>1.189, 2014=>1.162}),
+    assert_equal ({2004=>1.258, 2005=>0.96, 2006=>1.05, 2007=>0.992, 2008=>0.718, 2009=>0.652, 2010=>0.681, 2011=>0.728, 2012=>0.689, 2013=>0.694, 2014=>0.661}),
     ha.kindergarten_participation_rate_variation_trend('ACADEMY 20', :against => 'COLORADO')
   end
 

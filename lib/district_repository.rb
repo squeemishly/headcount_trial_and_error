@@ -9,12 +9,13 @@ class DistrictRepository
   attr_reader :enrollment_repo, :districts, :data
 
   def initialize
-    @data = nil
+    # @data = nil
     @districts = []
     @enrollment_repo = nil
   end
 
   def load_data(path)
+    #could this be combined to EnrollmentRepo.new.load_data(path,self)?
     @enrollment_repo = EnrollmentRepository.new #if enrollment_repo.nil?
     enrollment_repo.load_data(path, self)
   end
