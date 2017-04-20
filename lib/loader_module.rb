@@ -1,10 +1,9 @@
 module LoaderModule
 
   def enrollment_loader(path, dr)
-    new_key = path[:enrollment]
-    new_key.each do |key, value|
-      @data = read_file(value, new_key)
-      make_enrollments(key)
+    path[:enrollment].each do |key, value|
+      data = read_file(value, path[:enrollment])
+      make_enrollments(key, data)
       dr.make_districts if dr != nil
     end
   end

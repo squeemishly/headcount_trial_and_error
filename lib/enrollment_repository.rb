@@ -6,10 +6,10 @@ require_relative 'district_repository'
 
 class EnrollmentRepository
   include LoaderModule
-  attr_reader :data, :enrollments
+  attr_reader :enrollments
 
   def initialize
-    @data = nil
+    # @data = nil
     @enrollments = []
   end
 
@@ -19,16 +19,17 @@ class EnrollmentRepository
     # dr.make_districts if dr != nil
   end
 
-  def make_enrollments(key)
+  def make_enrollments(key, data)
     data.each do |row|
       if find_by_name(row[:location].upcase)
         find_by_name(row[:location].upcase).school_info[
-          :kindergarten_participation][row[:timeframe]] = row[:data]
+          key][row[:timeframe]] = row[:data]
       else
         enrollments << Enrollment.new({:name => row[:location], :type => key,
-         :kindergarten_participation => { row[:timeframe] => row[:data]}})
+         key => { row[:timeframe] => row[:data]}})
       end
     end
+    binding.pry
   end
 
   def find_by_name(location)

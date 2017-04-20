@@ -18,10 +18,6 @@ class EnrollmentRepositoryTest < Minitest::Test
     assert_instance_of EnrollmentRepository, er
   end
 
-  def test_it_has_access_to_the_csv
-    assert_instance_of CSV, er.data
-  end
-
   def test_it_creates_instances_of_enrollment_when_it_loads_the_data
     assert_instance_of Enrollment, er.enrollments[0]
     assert_instance_of Enrollment, er.enrollments[1]
@@ -33,7 +29,9 @@ class EnrollmentRepositoryTest < Minitest::Test
     refute er.find_by_name("squee")
   end
 
-
+  def test_it_can_create_information_for_both_kindergarten_and_high_school
+    assert_equal "", er.enrollments[0]
+  end
 
 
 end

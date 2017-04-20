@@ -7,11 +7,9 @@ class HeadcountAnalystTest < Minitest::Test
 
   def setup
     @dr = DistrictRepository.new
-    @dr.load_data({
-      :enrollment => {
-        :kindergarten => "./data/Kindergartners in full-day program.csv"
-      }
-    })
+    @dr.load_data({:enrollment =>
+      {:kindergarten => "./data/Kindergartners in full-day program.csv",
+        :high_school_graduation => "./data/High school graduation rates.csv"}})
     # @dr.load_data({
     #   :enrollment => {
     #     :kindergarten => "./test/fixtures/Kindergartners_in_a_full_day_program.csv"
@@ -35,19 +33,23 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_it_can_find_a_districts_average_participation
-    assert_equal 0.406, ha.district_average("ACADEMY 20")
+    assert_equal 0.598, ha.district_average("ACADEMY 20")
   end
 
   def test_it_compares_a_districts_average_participation_against_another_district
-    assert_equal 0.766, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'COLORADO')
-    assert_equal 0.447, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'YUMA SCHOOL DISTRICT 1')
+    assert_equal 1.072, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'COLORADO')
+    assert_equal 0.697, ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'YUMA SCHOOL DISTRICT 1')
   end
 
   def test_it_compares_a_districts_participation_rates_over_the_years
-    assert_equal [2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014],
-    ha.kindergarten_participation_rate_variation_trend('ACADEMY 20', :against => 'COLORADO').keys
+    assert_equal ({2004=>1.258, 2005=>0.96, 2006=>1.05, 2007=>0.992, 2008=>0.718, 2009=>0.652, 2010=>1.236, 2011=>1.211, 2012=>1.18, 2013=>1.189, 2014=>1.162}),
+    ha.kindergarten_participation_rate_variation_trend('ACADEMY 20', :against => 'COLORADO')
+  end
 
-    assert_equal [1.258, 0.961, 1.05, 0.992, 0.718, 0.652, 0.681, 0.728, 0.689, 0.694, 0.661],
-    ha.kindergarten_participation_rate_variation_trend('ACADEMY 20', :against => 'COLORADO').values
+  def test_it_can_find_the_graduation_variation
+  end
+
+  def test_it_can_find_the_k_part_versus_graduation
+
   end
 end

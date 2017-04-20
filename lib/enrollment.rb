@@ -4,10 +4,11 @@ class Enrollment
 
   def initialize(school_info)
     @name = school_info[:name].upcase
-    @kindergarten_participation = school_info[:kindergarten_participation]
-    @high_school_graduation = school_info[:high_school_graduation]
-    @school_info = school_info
     @type = school_info[:type]
+    # @kindergarten_participation = school_info[:kindergarten_participation]
+    # @high_school_graduation = school_info[:high_school_graduation]
+    @school_info = school_info
+    # @type = school_info[:type]
     # @data = school_info[:kindergarten_participation]
     # @dataformat = school_info[:school_participation][:dataformat]
     # @data = school_info[:kindergarten_participation][:data]
@@ -32,6 +33,7 @@ class Enrollment
   end
 
   def numberize_values(data)
+    binding.pry
     Hash[data.keys.map(&:to_i).zip(data.values.map {|x| x.to_f.round(3)})]
   end
 

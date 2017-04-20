@@ -8,30 +8,36 @@ class HeadcountAnalyst
     @dr = dr
   end
 
-  def kindergarten_participation_rate_variation(district_1, district_2)
-    ave = district_average(district_1)/district_average(district_2[:against])
-    ave.round(3)
+  def kindergarten_participation_rate_variation(dist_1, dist_2)
+    (district_average(dist_1)/district_average(dist_2[:against])).round(3)
   end
 
   def district_average(district)
+    total_dist_attendance(district).round(3)
+  end
+
+  def total_dist_attendance(district)
     count = 0
-    total = 0
-    stats = dr.find_by_name(district).enrollment.kindergarten_participation_by_year
-    stats.each do |key, value|
+    find_district(district).reduce(0) do |total, (key, value)|
       count += 1
-      total = total + value
-    end
-    average = (total/count).round(3)
+      total += value
+      total
+    end/count
   end
 
   def kindergarten_participation_rate_variation_trend(district_1, district_2)
     district_2 = district_2[:against]
-    first = dr.find_by_name(district_1).enrollment.kindergarten_participation_by_year
-    second = dr.find_by_name(district_2).enrollment.kindergarten_participation_by_year
-    result = {}
-    first.each do |key, value|
-      result[key] = (first[key]/second[key]).round(3)
+    first = find_district(district_1)
+    second = find_district(district_2)
+    result = first.reduce({}) do |hash, (key, value)|
+      hash[key] = (first[key]/second[key]).round(3)
+      hash
     end
     result = Hash[result.sort]
   end
+
+  def find_district(district)
+    dr.find_by_name(district).enrollment.kindergarten_participation_by_year
+  end
+
 end
