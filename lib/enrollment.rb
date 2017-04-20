@@ -4,7 +4,6 @@ class Enrollment
 
   def initialize(school_info)
     @name = school_info[:name].upcase
-    @type = school_info[:type]
     # @kindergarten_participation = school_info[:kindergarten_participation]
     # @high_school_graduation = school_info[:high_school_graduation]
     @school_info = school_info
@@ -17,24 +16,32 @@ class Enrollment
 
 #### need to truncate to the 3rd digit... do this. or die###
   def kindergarten_participation_by_year
-    numberize_values(@kindergarten_participation)
+    numberize_values(kindergarten)
   end
 
   def kindergarten_participation_in_year(year)
-    numberize_values(@kindergarten_participation)[year]
+    numberize_values(kindergarten)[year]
   end
 
   def graduation_rate_by_year
-    numberize_values(@high_school_graduation)
+    numberize_values(high_school)
   end
 
   def graduation_rate_in_year(year)
-    numberize_values(@high_school_graduation)[year]
+    numberize_values(high_school)[year]
   end
 
   def numberize_values(data)
-    binding.pry
+    # binding.pry
     Hash[data.keys.map(&:to_i).zip(data.values.map {|x| x.to_f.round(3)})]
+  end
+
+  def kindergarten
+    school_info[:kindergarten_participation] || school_info[:kindergarten]
+  end
+
+  def high_school
+    school_info[:high_school_graduation]
   end
 
 end

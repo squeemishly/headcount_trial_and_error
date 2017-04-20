@@ -8,8 +8,8 @@ class EnrollmentRepositoryTest < Minitest::Test
     @er = EnrollmentRepository.new
     @er.load_data({
       :enrollment => {
-        :kindergarten => "./test/fixtures/Kindergartners in full-day program.csv",
-        :high_school_graduation => "./test/fixtures/High school graduation rates.csv"
+        :high_school_graduation => "./test/fixtures/High school graduation rates.csv",
+        :kindergarten => "./test/fixtures/Kindergartners in full-day program.csv"
       }
     })
   end
