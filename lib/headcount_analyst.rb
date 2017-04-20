@@ -28,8 +28,12 @@ class HeadcountAnalyst
 
   def kindergarten_participation_correlates_with_high_school_graduation(dist)
     dist = dist[:for]
-    num = kindergarten_participation_against_high_school_graduation(dist)
-    num > 0.6 || num < 1.5
+    if dist == 'STATEWIDE'
+      binding.pry
+    else
+      num = kindergarten_participation_against_high_school_graduation(dist)
+      num > 0.6 || num < 1.5
+    end
   end
 
   def graduation_variation(district_1, district_2 = 'COLORADO')
